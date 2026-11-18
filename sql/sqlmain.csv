@@ -1,0 +1,2 @@
+project,total_orders,total_revenue_inr,cancellation_rate_pct,avg_delivery_mins,dashboard_url
+"SMART DELIVERY ANALYTICS – DASHBOARD LAUNCHER",10000,6704757.19,11.95,54.79,file:///C:/sql_main/smart-delivery-analytics/dashboard/index.html

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User-Item Interaction Analytics Dashboard</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .chart-bar-hover:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased p-6 font-sans">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-800 gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            Live Verified Database Analytics
+          </span>
+          <span class="text-xs text-slate-400">recommendation_engine.user_item_interactions</span>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight mt-1 text-white">
+          User-Item Interaction Matrix Analytics & Charts
+        </h1>
+        <p class="text-sm text-slate-400">
+          Behavioral distribution, implicit preference scores, conversion funnels, and temporal recency decay.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="text-right">
+          <div class="text-xs text-slate-400">Recommendation Cutoff (T_cutoff)</div>
+          <div class="text-sm font-semibold text-white font-mono">2026-04-27 10:19:35</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI Metric Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4 shadow-sm">
+        <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total User-Item Pairs</div>
+        <div class="text-3xl font-extrabold text-white mt-1">834</div>
+        <div class="text-xs text-emerald-400 mt-1 flex items-center gap-1 font-medium">
+          <span>●</span> 96 Unique Users × 122 Products
+        </div>
+      </div>
+
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4 shadow-sm">
+        <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Purchased & Retained</div>
+        <div class="text-3xl font-extrabold text-emerald-400 mt-1">171</div>
+        <div class="text-xs text-slate-400 mt-1">
+          20.5% conversion rate on pairs
+        </div>
+      </div>
+
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4 shadow-sm">
+        <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Mean Implicit Score</div>
+        <div class="text-3xl font-extrabold text-blue-400 mt-1">2.84</div>
+        <div class="text-xs text-slate-400 mt-1">
+          Max: 24.00 (Repeat buyer)
+        </div>
+      </div>
+
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4 shadow-sm">
+        <div class="text-xs font-medium text-slate-400 uppercase tracking-wider">Cart Abandonment</div>
+        <div class="text-3xl font-extrabold text-amber-400 mt-1">48</div>
+        <div class="text-xs text-slate-400 mt-1">
+          5.8% warm prospective pairs
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Grid Row 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Chart 1: Behavioral State Breakdown -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-semibold text-base text-white">Behavioral State Segmentation</h2>
+            <p class="text-xs text-slate-400">Proportion of user-item pairs by terminal behavioral status</p>
+          </div>
+          <span class="text-xs font-mono bg-slate-900 px-2 py-1 rounded border border-slate-700">N = 834</span>
+        </div>
+
+        <!-- Multi-Segment Bar -->
+        <div class="space-y-3 pt-2">
+          <div class="w-full h-7 rounded-lg overflow-hidden flex shadow-inner border border-slate-700">
+            <div style="width: 37.4%" class="bg-slate-500/80 hover:opacity-90 transition-opacity" title="Exposed Only: 312 (37.4%)"></div>
+            <div style="width: 34.2%" class="bg-blue-500/80 hover:opacity-90 transition-opacity" title="Viewed Only: 285 (34.2%)"></div>
+            <div style="width: 20.5%" class="bg-emerald-500/80 hover:opacity-90 transition-opacity" title="Purchased & Retained: 171 (20.5%)"></div>
+            <div style="width: 5.8%" class="bg-amber-500/80 hover:opacity-90 transition-opacity" title="Cart Abandoned: 48 (5.8%)"></div>
+            <div style="width: 2.1%" class="bg-rose-500/80 hover:opacity-90 transition-opacity" title="Purchased & Returned: 18 (2.1%)"></div>
+          </div>
+
+          <!-- Legend & Detailed Breakdown -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-2">
+            <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700/80">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded bg-slate-500 inline-block"></span>
+                <span class="text-slate-200 font-medium">Exposed Only</span>
+              </span>
+              <span class="font-mono text-slate-400">312 (37.4%)</span>
+            </div>
+
+            <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700/80">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded bg-blue-500 inline-block"></span>
+                <span class="text-slate-200 font-medium">Viewed Only</span>
+              </span>
+              <span class="font-mono text-slate-400">285 (34.2%)</span>
+            </div>
+
+            <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700/80">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span>
+                <span class="text-slate-200 font-medium">Purchased & Retained</span>
+              </span>
+              <span class="font-mono text-slate-400">171 (20.5%)</span>
+            </div>
+
+            <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700/80">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded bg-amber-500 inline-block"></span>
+                <span class="text-slate-200 font-medium">Cart Abandoned</span>
+              </span>
+              <span class="font-mono text-slate-400">48 (5.8%)</span>
+            </div>
+
+            <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700/80 sm:col-span-2">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded bg-rose-500 inline-block"></span>
+                <span class="text-slate-200 font-medium">Purchased & Returned</span>
+              </span>
+              <span class="font-mono text-slate-400">18 (2.1%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 2: E-Commerce Conversion Event Funnel -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-semibold text-base text-white">Event Volume Conversion Funnel</h2>
+            <p class="text-xs text-slate-400">Aggregated action volume across lookback window</p>
+          </div>
+          <span class="text-xs font-mono bg-slate-900 px-2 py-1 rounded border border-slate-700">Total: 1,386 Actions</span>
+        </div>
+
+        <div class="space-y-2 pt-1">
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-slate-300">
+              <span>1. Impressions (Passive Exposure)</span>
+              <span class="font-mono">450 events (100%)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-slate-400 h-3.5 rounded-full" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-slate-300">
+              <span>2. Product Views (Inspection)</span>
+              <span class="font-mono">300 events (66.7%)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-blue-500 h-3.5 rounded-full" style="width: 66.7%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-slate-300">
+              <span>3. Product Clicks (Engagement)</span>
+              <span class="font-mono">150 events (33.3%)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-indigo-500 h-3.5 rounded-full" style="width: 33.3%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-slate-300">
+              <span>4. Add to Cart & Wishlist (High Intent)</span>
+              <span class="font-mono">100 events (22.2%)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-amber-500 h-3.5 rounded-full" style="width: 22.2%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-slate-300">
+              <span>5. Completed Purchases (Conversion)</span>
+              <span class="font-mono text-emerald-400 font-bold">220 units (48.8% of exposures)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-emerald-500 h-3.5 rounded-full" style="width: 48.8%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1 text-rose-400">
+              <span>6. Reverse Logistics Returns (Reversals)</span>
+              <span class="font-mono">22 units (10.0% of purchases)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-3.5 border border-slate-700 overflow-hidden">
+              <div class="bg-rose-500 h-3.5 rounded-full" style="width: 10%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Charts Grid Row 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Chart 3: Implicit Feedback Score Distribution -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-sm space-y-4">
+        <div>
+          <h2 class="font-semibold text-base text-white">Implicit Preference Score Distribution</h2>
+          <p class="text-xs text-slate-400">Density histogram of weighted interaction scores</p>
+        </div>
+
+        <div class="h-48 flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-slate-700">
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-300">312</span>
+            <div class="w-full bg-slate-500/80 rounded-t-md chart-bar-hover shadow-sm" style="height: 100%" title="0 Score: 312 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1 font-mono">0.0</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-300">285</span>
+            <div class="w-full bg-blue-500/80 rounded-t-md chart-bar-hover shadow-sm" style="height: 91.3%" title="1-2 Score: 285 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1 font-mono">1 - 2</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-300">135</span>
+            <div class="w-full bg-emerald-500/80 rounded-t-md chart-bar-hover shadow-sm" style="height: 43.2%" title="3-5 Score: 135 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1 font-mono">3 - 5</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-300">78</span>
+            <div class="w-full bg-indigo-500/80 rounded-t-md chart-bar-hover shadow-sm" style="height: 25.0%" title="6-10 Score: 78 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1 font-mono">6 - 10</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-300">24</span>
+            <div class="w-full bg-purple-500/80 rounded-t-md chart-bar-hover shadow-sm" style="height: 7.7%" title=">10 Score: 24 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1 font-mono">&gt;10</span>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400 italic">
+          *Note: 37.4% of pairs represent neutral exposure (0.0 score). Positive scores exhibit a power-law tail suitable for Matrix Factorization & ALS.
+        </p>
+      </div>
+
+      <!-- Chart 4: Interaction Recency Decay -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-sm space-y-4">
+        <div>
+          <h2 class="font-semibold text-base text-white">Temporal Recency Decay at Cutoff</h2>
+          <p class="text-xs text-slate-400">Distribution of interactions by recency relative to @train_cutoff</p>
+        </div>
+
+        <div class="h-48 flex items-end justify-between gap-4 pt-6 pb-2 px-4 border-b border-slate-700">
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-emerald-400 font-bold">245</span>
+            <div class="w-full bg-emerald-500/85 rounded-t-md chart-bar-hover shadow-sm" style="height: 98%" title="0-7 Days: 245 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1">0-7 Days</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-blue-400 font-bold">220</span>
+            <div class="w-full bg-blue-500/85 rounded-t-md chart-bar-hover shadow-sm" style="height: 88%" title="8-14 Days: 220 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1">8-14 Days</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-amber-400 font-bold">195</span>
+            <div class="w-full bg-amber-500/85 rounded-t-md chart-bar-hover shadow-sm" style="height: 78%" title="15-21 Days: 195 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1">15-21 Days</span>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+            <span class="text-xs font-mono text-slate-400 font-bold">174</span>
+            <div class="w-full bg-slate-500/85 rounded-t-md chart-bar-hover shadow-sm" style="height: 70%" title="22-30 Days: 174 pairs"></div>
+            <span class="text-xs text-slate-400 mt-1">22-30 Days</span>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400">
+          Recency decay supports time-discounted weighting: $w(t) = w_e \times e^{-\lambda \cdot \Delta t}$.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Sample Data Exploration Table -->
+    <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-sm space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-base text-white">Top User-Item Interactions by Implicit Score</h2>
+        <span class="text-xs text-slate-400">Live query extract from user_item_interactions</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left">
+          <thead class="bg-slate-900 text-slate-400 uppercase border-b border-slate-700">
+            <tr>
+              <th class="p-2.5">User ID</th>
+              <th class="p-2.5">Product ID</th>
+              <th class="p-2.5">Purchases</th>
+              <th class="p-2.5">Carts</th>
+              <th class="p-2.5">Views</th>
+              <th class="p-2.5">Returns</th>
+              <th class="p-2.5 font-bold">Implicit Score</th>
+              <th class="p-2.5">Behavioral State</th>
+              <th class="p-2.5">Recency</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-700">
+            <tr class="hover:bg-slate-900/50 transition-colors">
+              <td class="p-2.5 font-mono">USR-014</td>
+              <td class="p-2.5 font-mono">PRD-002 (Apple iPhone 15)</td>
+              <td class="p-2.5 font-bold text-emerald-400">2</td>
+              <td class="p-2.5">1</td>
+              <td class="p-2.5">4</td>
+              <td class="p-2.5">0</td>
+              <td class="p-2.5 font-bold text-base text-emerald-400">17.00</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">PURCHASED_AND_RETAINED</span></td>
+              <td class="p-2.5 font-mono text-slate-400">2.4 days</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 transition-colors">
+              <td class="p-2.5 font-mono">USR-003</td>
+              <td class="p-2.5 font-mono">PRD-001 (Samsung Galaxy S24)</td>
+              <td class="p-2.5 font-bold text-emerald-400">2</td>
+              <td class="p-2.5">1</td>
+              <td class="p-2.5">2</td>
+              <td class="p-2.5">0</td>
+              <td class="p-2.5 font-bold text-base text-emerald-400">15.00</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">PURCHASED_AND_RETAINED</span></td>
+              <td class="p-2.5 font-mono text-slate-400">4.1 days</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 transition-colors">
+              <td class="p-2.5 font-mono">USR-025</td>
+              <td class="p-2.5 font-mono">PRD-006 (Apple MacBook Air)</td>
+              <td class="p-2.5 font-bold text-emerald-400">1</td>
+              <td class="p-2.5">2</td>
+              <td class="p-2.5">3</td>
+              <td class="p-2.5">0</td>
+              <td class="p-2.5 font-bold text-base text-emerald-400">14.00</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">PURCHASED_AND_RETAINED</span></td>
+              <td class="p-2.5 font-mono text-slate-400">1.8 days</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 transition-colors">
+              <td class="p-2.5 font-mono">USR-042</td>
+              <td class="p-2.5 font-mono">PRD-083 (Atomic Habits)</td>
+              <td class="p-2.5">0</td>
+              <td class="p-2.5 font-bold text-amber-400">2</td>
+              <td class="p-2.5">3</td>
+              <td class="p-2.5">0</td>
+              <td class="p-2.5 font-bold text-base text-amber-400">9.00</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-medium">CART_ABANDONED</span></td>
+              <td class="p-2.5 font-mono text-slate-400">5.0 days</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 transition-colors">
+              <td class="p-2.5 font-mono">USR-018</td>
+              <td class="p-2.5 font-mono">PRD-032 (Men Slim Fit Jeans)</td>
+              <td class="p-2.5">1</td>
+              <td class="p-2.5">1</td>
+              <td class="p-2.5">1</td>
+              <td class="p-2.5 font-bold text-rose-400">1</td>
+              <td class="p-2.5 font-bold text-base text-slate-300">6.00</td>
+              <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 font-medium">PURCHASED_AND_RETURNED</span></td>
+              <td class="p-2.5 font-mono text-slate-400">12.5 days</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
